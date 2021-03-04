@@ -29,10 +29,11 @@ import (
 	"unicode"
 
 	"github.com/emicklei/proto"
+	"go.uber.org/zap"
+
 	"github.com/uber/prototool/internal/file"
 	"github.com/uber/prototool/internal/settings"
 	"github.com/uber/prototool/internal/text"
-	"go.uber.org/zap"
 )
 
 var (
@@ -99,6 +100,7 @@ var (
 		messageNamesCamelCaseLinter,
 		messageNamesCapitalizedLinter,
 		messagesHaveCommentsLinter,
+		messagesHaveSentenceCommentsLinter,
 		messagesHaveCommentsExceptRequestResponseTypesLinter,
 		messagesHaveSentenceCommentsExceptRequestResponseTypesLinter,
 		messagesNotEmptyExceptRequestResponseTypesLinter,
@@ -536,7 +538,7 @@ func hasGolangStyleComment(comment *proto.Comment, name string) bool {
 }
 
 func hasCompleteSentenceComment(comment *proto.Comment) bool {
-	return commentStartsWithUppercaseLetter(comment) && commentContainsPeriod(comment)
+	return commentStartsWithUppercaseLetter(comment)
 }
 
 func commentStartsWithUppercaseLetter(comment *proto.Comment) bool {
@@ -547,7 +549,16 @@ func commentStartsWithUppercaseLetter(comment *proto.Comment) bool {
 	if firstLine == "" {
 		return false
 	}
-	return unicode.IsUpper(rune(firstLine[0])) || unicode.IsDigit(rune(firstLine[0]))
+	return unicode.IsUpper(rune(firstLine[0])) || unicode.IsDigit(rune(firstLine[0])) || hasChineseChar(firstLine)
+}
+
+func hasChineseChar(str string) bool {
+	for _, r := range str {
+		if unicode.Is(unicode.Scripts["Han"], r) {
+			return true
+		}
+	}
+	return false
 }
 
 func commentContainsPeriod(comment *proto.Comment) bool {

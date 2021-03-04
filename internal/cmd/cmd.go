@@ -94,10 +94,14 @@ func runRootCommand(develMode bool, args []string, stdin io.Reader, stdout io.Wr
 	return exitCode
 }
 
+var GetRootCoomand = getRootCommand
+var CheckOS = checkOS
+var PrintAndGetErrorExitCode = printAndGetErrorExitCode
+
 func getRootCommand(develMode bool, exitCodeAddr *int, args []string, stdin io.Reader, stdout io.Writer, stderr io.Writer) *cobra.Command {
 	flags := &flags{}
 
-	rootCmd := &cobra.Command{Use: "prototool"}
+	rootCmd := &cobra.Command{Use: "pb", Short: "A Swiss Army Knife for Protocol Buffers"}
 	rootCmd.AddCommand(allCmdTemplate.Build(develMode, exitCodeAddr, stdin, stdout, stderr, flags))
 	rootCmd.AddCommand(compileCmdTemplate.Build(develMode, exitCodeAddr, stdin, stdout, stderr, flags))
 	rootCmd.AddCommand(createCmdTemplate.Build(develMode, exitCodeAddr, stdin, stdout, stderr, flags))
