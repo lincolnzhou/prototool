@@ -4,10 +4,10 @@ go 1.14
 
 require (
 	github.com/emicklei/proto v1.9.0
-	github.com/fullstorydev/grpcurl v1.4.0
+	github.com/fullstorydev/grpcurl v1.5.1
 	github.com/gobuffalo/flect v0.2.1
 	github.com/gofrs/flock v0.7.1
-	github.com/golang/protobuf v1.3.4
+	github.com/golang/protobuf v1.5.2
 	github.com/jhump/protoreflect v1.6.0
 	github.com/mitchellh/go-wordwrap v1.0.0
 	github.com/spf13/cobra v0.0.6
