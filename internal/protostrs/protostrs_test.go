@@ -57,10 +57,14 @@ func TestGoPackageV2(t *testing.T) {
 	assert.Equal(t, "foopb", GoPackageV2("foo"))
 	assert.Equal(t, "barpb", GoPackageV2("foo.bar"))
 	assert.Equal(t, "barpb", GoPackageV2("first.foo.bar"))
-	assert.Equal(t, "barv1", GoPackageV2("foo.bar.v1"))
-	assert.Equal(t, "barv1", GoPackageV2("first.foo.bar.v1"))
-	assert.Equal(t, "barv1beta1", GoPackageV2("foo.bar.v1beta1"))
-	assert.Equal(t, "barv1beta1", GoPackageV2("first.foo.bar.v1beta1"))
+	// assert.Equal(t, "barv1", GoPackageV2("foo.bar.v1"))
+	assert.Equal(t, "foo/bar/v1;barv1", GoPackageV2("foo.bar.v1"))
+	// assert.Equal(t, "barv1", GoPackageV2("first.foo.bar.v1"))
+	assert.Equal(t, "first/foo/bar/v1;barv1", GoPackageV2("first.foo.bar.v1"))
+	// assert.Equal(t, "barv1beta1", GoPackageV2("foo.bar.v1beta1"))
+	assert.Equal(t, "foo/bar/v1beta1;barv1beta1", GoPackageV2("foo.bar.v1beta1"))
+	// assert.Equal(t, "barv1beta1", GoPackageV2("first.foo.bar.v1beta1"))
+	assert.Equal(t, "first/foo/bar/v1beta1;barv1beta1", GoPackageV2("first.foo.bar.v1beta1"))
 	assert.Equal(t, "v1betaa1pb", GoPackageV2("foo.bar.v1betaa1"))
 }
 

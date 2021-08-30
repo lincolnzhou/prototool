@@ -80,7 +80,7 @@ func GoPackageV2(packageName string) string {
 		return GoPackage(packageName)
 	}
 	split := strings.Split(packageName, ".")
-	return split[len(split)-2] + split[len(split)-1]
+	return strings.Join(split, "/") + ";" + split[len(split)-2] + split[len(split)-1]
 }
 
 // JavaOuterClassname returns the value for the file option
